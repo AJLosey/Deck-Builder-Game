@@ -2,26 +2,36 @@ const getEnemyHealth = function () {
     return document.getElementById(`enemy-health`).children[0].getAttribute("aria-valuenow");
 }
 const setEnemyHealth = function (value) {
-    document.getElementById(`enemy-health`).children[0].setAttribute("aria-valuenow", value);
+    document.getElementById(`enemy-health`).children[0].setAttribute("aria-valuenow", `${value}`);
+    let percent = (Number(document.getElementById(`enemy-health`).children[0].getAttribute("aria-valuenow")) / Number(document.getElementById(`enemy-health`).children[0].getAttribute("aria-valuemax"))) * 100;
+    console.log(percent);
+    document.getElementById(`enemy-health`).children[0].setAttribute("style", `width: ${percent}%`);
 }
 const setPlayerHealth = function (value) {
-    document.getElementById(`player-health`).children[0].setAttribute("aria-valuenow", value);
+    document.getElementById(`player-health`).children[0].setAttribute("aria-valuenow", `${value}`);
+    let percent = (Number(document.getElementById(`player-health`).children[0].getAttribute("aria-valuenow")) / Number(document.getElementById(`player-health`).children[0].getAttribute("aria-valuemax"))) * 100;
+    console.log(percent);
+    document.getElementById(`player-health`).children[0].setAttribute("style", `width: ${percent}%`);
 }
 const getPlayerHealth = function () {
-    document.getElementById(`player-health`).children[0].getAttribute("aria-valuenow");
+    return document.getElementById(`player-health`).children[0].getAttribute("aria-valuenow");
 }
 //not for use with attacks and cards
 
 const changePlayerHP = function (value) {
     let hp = getPlayerHealth();
-    hp += value;
-    setPlayerHealth(hp);
+    let hpNum = Number(hp)
+    hpNum += value;
+    let NewHp = String(hpNum)
+    setPlayerHealth(NewHp);
 }
 
 const changeEnemyHP = function (value) {
     let hp = getEnemyHealth();
-    hp += value;
-    setEnemyHealth(hp);
+    let hpNum = Number(hp)
+    hpNum += value;
+    let NewHp = String(hpNum)
+    setEnemyHealth(NewHp);
 }
 //Use these to manipulate health during attacks and cards
 
@@ -37,7 +47,7 @@ class Enemy {
     fillInfoEnemy() {
         document.getElementById(`enemy-image`).src = this.img;
         document.getElementById(`enemy-name`).innerHTML = this.name;
-        document.getElementById(`enemy-health`).children[0].setAttribute("aria-valuemax", this.health);
+        document.getElementById(`enemy-health`).children[0].setAttribute("aria-valuemax", `${this.health}`);
         setEnemyHealth(this.health);
     }
 
