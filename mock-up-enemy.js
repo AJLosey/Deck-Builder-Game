@@ -1,17 +1,17 @@
 const tentacleBatter = function () {
-    changePlayerHP(-14);
+    changePlayerHP(-14, true);
 }
 
 const voidDoom = function () {
-    changePlayerHP(-5);
+    changePlayerHP(-5, true);
     fightVars.playerDMGModify -= 2;
     fightVars.playerWeakenedTimer += 2;
 }
 
 const mindWipe = function () {
-    cardSlots[1] = null;
-    cardSlots[3] = null;
-    changePlayerHP(-5);
+    destroyCard(1);
+    destroyCard(3);
+    changePlayerHP(-5, true);
 }
 
 const gorgoAttacks = [
