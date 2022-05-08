@@ -90,6 +90,44 @@ class Card {
 
 }
 
+class Effect {
+    constructor(effectrun, value, timer) {
+        this.effectrun = effectrun
+        this.value = value
+        this.timer = timer
+    }
+}
+
+
+//reset all fightVars before calling next two functions, do this after player's turn, before new cards are drawn
+
+//called at the end of a turn
+function cardPassEffects() {
+    cardSlots.forEach((card) => {
+        if (!card.passEffect) {
+            return;
+        }
+        if (card.passEffect.effect) {
+            card.passEffect.effectrun(card.passEffect.value);
+        }
+    });
+
+}
+
+//iterates over active effects. runs effect and decrements timer
+function effectHandler() {
+
+    activeEffectArr.forEach((effect) => {
+        effect.effectrun(effect.value);
+        effect.timer--;
+    })
+    activeEffectArr = activeEffectArr.filter((effect) => effect.timer > 0)
+}
+
+//stores active effects
+activeEffectArr = []
+
+
 const fightVars = {
 
     energy: 2,
@@ -102,9 +140,8 @@ const fightVars = {
 
     playerDMGModify: 0,
 
-    playerWeakenedTimer: 0,
-    //one of possibly many effect timers. decrement this every turn, and if it runs out, return playerDMGModify to zero if it's below zero. Maybe all timers should be in an array? too complicated for mock-up, refactor later
+
 }
 
-//each array element should be set to null when a card is used up. Also used to track wich slots need a new card each turn, on player's turn start, display blank cards on any slots that have been nulled
+//each array element should be set to null when a card is used up. Also used to track wich slots need a new card each turn, on player's turn start, display blank cards on any slots that have been nulled, new cards are drawn at the end of the player's turn, after the active effects are run
 const cardSlots = [null, null, null, null, null]

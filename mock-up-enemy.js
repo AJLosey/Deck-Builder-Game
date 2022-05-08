@@ -5,7 +5,7 @@ const tentacleBatter = function () {
 const voidDoom = function () {
     changePlayerHP(-5, true);
     fightVars.playerDMGModify -= 2;
-    fightVars.playerWeakenedTimer += 2;
+    activeEffectArr.push(new Effect((value) => fightVars.playerDMGModify -= value, 2, 2))
 }
 
 const mindWipe = function () {
