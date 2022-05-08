@@ -14,6 +14,12 @@ const mindWipe = function () {
     changePlayerHP(-5, true);
 }
 
+const mindWipe2 = function () {
+    destroyCard(2);
+    destroyCard(3);
+    changePlayerHP(-5, true);
+}
+
 const gorgoAttacks = [
     tentacleBatter, voidDoom, mindWipe
 ]

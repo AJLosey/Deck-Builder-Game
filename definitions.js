@@ -20,10 +20,14 @@ const getPlayerHealth = function () {
 
 const changePlayerHP = function (value, mod) {
     let hp = getPlayerHealth();
-    let hpNum = Number(hp)
+    let hpNum = Number(hp);
+    let prevHP = hpNum;
     hpNum += value;
     if (mod) {
         hpNum -= fightVars.enemyDMGModify;
+        if (prevHP < hpNum) {
+            hpNum = prevHP;
+        }
     };
     let NewHp = String(hpNum)
     setPlayerHealth(NewHp);
@@ -32,22 +36,20 @@ const changePlayerHP = function (value, mod) {
 
 const changeEnemyHP = function (value, mod) {
     let hp = getEnemyHealth();
-    let hpNum = Number(hp)
+    let hpNum = Number(hp);
+    let prevHP = hpNum;
     hpNum += value;
     if (mod) {
         hpNum -= fightVars.playerDMGModify;
+        if (prevHP < hpNum) {
+            hpNum = prevHP;
+        }
     };
     let NewHp = String(hpNum)
     setEnemyHealth(NewHp);
 }
 //Use these to manipulate health during attacks and cards
 
-const destroyCard = function (index) {
-    if (!cardSlots[index].dodge) {
-        cardSlots[index] = null;
-    }
-}
-//Use this to destroy player cards on the enemy's turn, if the attack is dodgeable. If the attack should be undodgeable, just set cardslots[i] to null in the attack function
 
 class Enemy {
     constructor(name, img, health, attacks) {
@@ -96,45 +98,46 @@ class Effect {
         this.value = value
         this.timer = timer
     }
+
+    run() {
+        this.effectrun(this.value);
+    }
 }
 
 
 //reset all fightVars before calling next two functions, do this after player's turn, before new cards are drawn
 
-//called at the end of a turn
+//iterates over passive effects
 function cardPassEffects() {
     cardSlots.forEach((card) => {
         if (!card.passEffect) {
             return;
         }
         if (card.passEffect.effect) {
-            card.passEffect.effectrun(card.passEffect.value);
+            card.passEffect.run();
         }
     });
 
 }
 
-//iterates over active effects. runs effect and decrements timer
+//iterates over timed active effects. runs effect and decrements timer
 function effectHandler() {
 
     activeEffectArr.forEach((effect) => {
-        effect.effectrun(effect.value);
+        effect.run();
         effect.timer--;
     })
-    activeEffectArr = activeEffectArr.filter((effect) => effect.timer > 0)
+    activeEffectArr = activeEffectArr.filter((effect) => effect.timer > 0);
 }
 
 //stores active effects
-activeEffectArr = []
+activeEffectArr = [];
 
 
 const fightVars = {
 
     energy: 2,
     //player has 2 actions before their turn ends
-
-    totalEn: 2,
-    //used to reset energy on every turn
 
     enemyDMGModify: 0,
 

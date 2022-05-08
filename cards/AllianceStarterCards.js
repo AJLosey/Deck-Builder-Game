@@ -11,14 +11,10 @@ const allCyclone = new Card("Alliance Cyclone", "../cardimgs/Ammonite", "Allianc
     changeEnemyHP(-22, true);
 });
 
-let defGridNum = cardSlots.filter(allDefenseGrid).length
-
 const allDefenseGrid = new Card("Alliance Defense Grid", "../cardimgs/Ammonite", "These ships are built to absorb damage, protecting the main fleet behind them. They are most helpful in all-out conflicts between two fleets, and don't see much deployment from the more disruptive-minded IPP admirals of the AAS. When a straight contest of power is unavoidable though, it helps to have some fast and disposable damage-sinks.<br><br>Deals 8 damage on use, negates 4 point of damage from attacks on hold.", function () {
     changeEnemyHP(-8, true);
 
-}, function (fightVars) {
-    fightVars.enemyDMGModify
-});
+}, new Effect((value) => fightVars.enemyDMGModify -= value, 2));
 
 const droneAttach = new Card("Alliance constructor ship MK I", "../cardimgs/Ammonite", "The alliance constructors facilitate the chaining together of small modular ships into devestating super-weapons. The first version is only capable of some basic configurations, but it should not be underestimated. <br><br><i>AAS fights are like water leaks. A small problem now is always a bigger problem later -SBS general Sigham</i><br><br>On use, upgrades two drone or cluster ships into a single, stronger card.", function () {
     let droneNum = 0
