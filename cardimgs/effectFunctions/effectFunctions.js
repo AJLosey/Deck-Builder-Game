@@ -24,7 +24,7 @@ const weakenPlayer = function (value) {
     fightVars.playerDMGModify -= value;
 }
 
-const negateWeaken = function (value) {
+const negateWeakenPlayer = function (value) {
     while (value > 0) {
         if (fightVars.playerDMGModify < 0) {
             fightVars.playerDMGModify++;
@@ -32,6 +32,7 @@ const negateWeaken = function (value) {
         value--;
     }
 }
+//push to end of the array for best effect
 
 const energy = function (value) {
     fightVars.energy += value;
