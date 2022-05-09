@@ -14,39 +14,8 @@ const allCyclone = new Card("Alliance Cyclone", "../cardimgs/Ammonite", "Allianc
 const allDefenseGrid = new Card("Alliance Defense Grid", "../cardimgs/Ammonite", "These ships are built to absorb damage, protecting the main fleet behind them. They are most helpful in all-out conflicts between two fleets, and don't see much deployment from the more disruptive-minded IPP admirals of the AAS. When a straight contest of power is unavoidable though, it helps to have some fast and disposable damage-sinks.<br><br>Deals 8 damage on use, negates 4 point of damage from attacks on hold.", function () {
     changeEnemyHP(-8, true);
 
-}, new Effect((value) => fightVars.enemyDMGModify -= value, 2));
+}, new Effect(weakenEnemy, 2));
 
 const droneAttach = new Card("Alliance constructor ship MK I", "../cardimgs/Ammonite", "The alliance constructors facilitate the chaining together of small modular ships into devestating super-weapons. The first version is only capable of some basic configurations, but it should not be underestimated. <br><br><i>AAS fights are like water leaks. A small problem now is always a bigger problem later -SBS general Sigham</i><br><br>On use, upgrades two drone or cluster ships into a single, stronger card.", function () {
-    let droneNum = 0
-    let clusterNum = 0
-    cardSlots.forEach((element) => {
-        if (element = allDroneShip) {
-            droneNum++;
-        }
-        if (element = allClusterShip) {
-            clusterNum++;
-        }
-    });
-    if (droneNum >= 2) {
-        let i = cardSlots.findIndex((element) => element == allDroneShip);
-        cardSlots[i] = allClusterShip;
-        i = cardSlots.findIndex((element) => element == allDroneShip);
-        cardSlots[i] = null;
-    } else if (clusterNum >= 2) {
-        let i = cardSlots.findIndex((element) => element == allClusterShip);
-        cardSlots[i] = allCyclone;
-        i = cardSlots.findIndex((element) => element == allClusterShip);
-        cardSlots[i] = null;
-    } else if (droneNum == 1 && clusterNum == 1) {
-        let i = cardSlots.findIndex((element) => element == allClusterShip);
-        let ii = cardSlots.findIndex((element) => element == allDroneShip);
-        if (i > ii) {
-            cardSlots[ii] = allRedundancy;
-            cardSlots[i] = null;
-        }
-        if (i < ii) {
-            cardSlots[ii] = null;
-            cardSlots[i] = allRedundancy;
-        }
-    }
+    droneAttachMKI();
 })

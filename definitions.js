@@ -112,8 +112,7 @@ function cardPassEffects() {
     cardSlots.forEach((card) => {
         if (!card.passEffect) {
             return;
-        }
-        if (card.passEffect.effect) {
+        } else {
             card.passEffect.run();
         }
     });
